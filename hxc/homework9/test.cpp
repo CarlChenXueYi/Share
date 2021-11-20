@@ -1,42 +1,28 @@
-#include <algorithm>
 #include <iostream>
-#include <string>
-#include <unordered_map>
-#include <unordered_set>
-#include <vector>
+#include <tabulate/table.hpp>
 
-#define BUILD_BUG_ON(condition) ((void)sizeof(char[1 - 2 * !!(condition)]))
-
-using namespace std;
+using namespace tabulate;
 
 int main()
 {
-    vector<vector<int>> matrix = {{1, 2, 3}, {1, 2}, {4}, {6, 5, 4}, {1, 3, 7}};
-    for (auto formerIt = matrix.begin(); formerIt != matrix.end(); formerIt++)
-    {
-        auto laterIt = formerIt + 1;
-        while(laterIt != matrix.end())
-        {
-            if (laterIt->size()<=3)
-            {
-                for (auto it=laterIt->begin();it!=laterIt->end();it++)
-                {
-                    formerIt->push_back(*it);
-                }   
-                matrix.erase(laterIt);
-                //laterIt++;
-            }
-            else
-                laterIt++;
-            for (auto ait=matrix.begin();ait!=matrix.end();ait++)
-            {
-                for (auto bit = ait->begin();bit!=ait->end();bit++)
-                {
-                    cout << *bit << " ";
-                }
-                cout << endl;
-            }
-            cout << "fin" << endl;
-        } 
-    }
+    Table table;
+
+    table.format().corner("♥").font_style({FontStyle::bold}).corner_color(Color::green).border_color(Color::green);
+
+    table.add_row({"新宇爱", "学毅！！"});
+    table.add_row({"French", "Je t’aime"});
+    table.add_row({"Spanish", "Te amo"});
+    table.add_row({"German", "Ich liebe Dich"});
+    table.add_row({"Mandarin Chinese", "我爱你"});
+    table.add_row({"Japanese", "愛してる"});
+    table.add_row({"Korean", "사랑해 (Saranghae)"});
+    table.add_row({"Greek", "Σ΄αγαπώ (Se agapo)"});
+    table.add_row({"Italian", "Ti amo"});
+    table.add_row({"Russian", "Я тебя люблю (Ya tebya liubliu)"});
+    table.add_row({"Hebrew", "אני אוהב אותך (Ani ohev otakh)"});
+
+    // Column 1 is using mult-byte characters
+    table.column(1).format().multi_byte_characters(true);
+
+    std::cout << table << std::endl;
 }
