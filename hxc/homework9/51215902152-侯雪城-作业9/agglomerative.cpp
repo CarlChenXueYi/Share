@@ -217,7 +217,6 @@ void k1Agglomerative(vector<vector<string>>& k1Tasks,
         cout << "wtf ? I will figure it out!" << endl;
     }
 }
-单一聚类算法
 
 bool k1SingleAgglomerative(vector<vector<string>>::iterator formerIt,
                            vector<vector<string>>::iterator laterIt,

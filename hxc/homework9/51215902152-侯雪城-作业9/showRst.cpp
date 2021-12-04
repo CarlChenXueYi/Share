@@ -1,3 +1,4 @@
+#include <map>
 #include <string>
 #include <tabulate/table.hpp>
 #include <vector>
@@ -6,7 +7,9 @@ using namespace tabulate;
 void tableInit();
 void tableFormat();
 void runTimeOutPut(int thold, int moduleNum, std::vector<std::vector<std::string>> modObj);
-
+void finOutPut(std::vector<std::vector<std::string>> modObj,
+               std::vector<std::vector<int>>&        commCostMatrix,
+               std::map<std::string, int>&           tasksToIndex);
 struct outPutFormat
 {
     std::string thold;
@@ -101,4 +104,28 @@ void runTimeOutPut(int thold, int moduleNum, std::vector<std::vector<std::string
 {
     outPutFormat outPutForm = toOutPutFormat(thold, moduleNum, modObj);
     table.add_row({outPutForm.thold, outPutForm.moduleNum, outPutForm.everyModule});
+}
+
+void finOutPut(std::vector<std::vector<std::string>> modObj,
+               std::vector<std::vector<int>>&        commCostMatrix,
+               std::map<std::string, int>&           tasksToIndex)
+{
+    int totalCost = 0;
+    for (auto ait = modObj.begin(); ait != modObj.end(); ait++)
+    {
+        for (auto bit = ait + 1; bit != modObj.end(); bit++)
+        {
+            for (auto mit = ait->begin(); mit != ait->end(); mit++)
+            {
+                for (auto nit = bit->begin(); nit != bit->end(); nit++)
+                {
+                    // std::cout << *mit << " " << *nit << std::endl;
+                    // std::cout << "cur cost is " << commCostMatrix[tasksToIndex[*mit]][tasksToIndex[*nit]]
+                    //           << "and total is " << totalCost << std::endl;
+                    totalCost += commCostMatrix[tasksToIndex[*mit]][tasksToIndex[*nit]];
+                }
+            }
+        }
+    }
+    std::cout << "TotalCost is " << totalCost/10 << std::endl;
 }

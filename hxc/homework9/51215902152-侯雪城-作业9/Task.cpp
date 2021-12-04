@@ -34,12 +34,20 @@ void GetInfo(string inputName, vector<vector<int>>& commCostMatrix, vector<strin
         tasks.push_back(taskName);
 
 
-    commCostMatrix.resize(taskNum, vector<int>(taskNum));
+    //commCostMatrix.resize(taskNum, vector<int>(taskNum));
     for (int i = 0; i < taskNum; i++)
     {
+        std::cout << i << std::endl;
+        vector<int> temp;
         getline(input, buf);
-        for (int j = 0; j < taskNum; j++)
-            commCostMatrix[i][j] = buf[j] - '0';
+        stringstream taskNamess(buf);
+        string taskNamee;
+        while (taskNamess >> taskNamee)
+            temp.push_back(stoi(taskNamee));
+
+        commCostMatrix.push_back(temp);
+        // for (int j = 0; j < taskNum; j++)
+        //     commCostMatrix[i][j] = buf[j] - '0';
         // task[i][j] = buf[j] - '0';
     }
 }
